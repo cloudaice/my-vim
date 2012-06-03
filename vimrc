@@ -1,7 +1,5 @@
 "设置TAB键为4个空格
-
 set tabstop =4 
-set helplang=cn  
 "显示行号
 set number 
 
