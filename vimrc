@@ -97,6 +97,11 @@ endif
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+syntax on
+"不产生缓冲文件
+set nobackup 
+"设置配色方案
+colorscheme contrasty 
 "设置TAB键为4个空格
 set tabstop =4 
 "显示行号
@@ -127,8 +132,6 @@ set is
 set ignorecase
 "当有一个字母是大写的时候，大小写敏感 
 set smartcase 
-"设置配色方案
-colorscheme desert 
 "使用:e命令的时候 可选项预览
 set wildmenu
 "显示括号配对情况
@@ -211,15 +214,14 @@ map <silent> <F2> :if &guioptions =~# 'T' <Bar>
         \set guioptions+=m <Bar>
     \endif<CR>
 
-"关闭右侧的滚动条
-set guioptions-=r
-
 "map <F8> :NERDTree<CR>
 map <F8> ::NERDTreeToggle<CR>
 
 set autoread
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "设置打开新标签和切换标签的快捷键
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if has("gui_running") "|| s:useWildMenu
    nmap <C-TAB> :tabNext<CR>
    nmap <C-S-TAB> :tabnext<CR>
@@ -229,10 +231,13 @@ if has("gui_running") "|| s:useWildMenu
    nmap <C-F4> :q<CR>
 endif
 
+
+""""""""""""""""""""""""""""""
+"设置NERDTree
+""""""""""""""""""""""""""""""
 "NERD Tree 
 let NERDChristmasTree=1 
 let NERDTreeAutoCenter=1 
-
 "let NERDTreeBookmarksFile=$VIM.'\Data\NerdBookmarks.txt' 
 let NERDTreeMouseMode=2 
 let NERDTreeShowBookmarks=1 
@@ -241,3 +246,8 @@ let NERDTreeShowHidden=1
 let NERDTreeShowLineNumbers=1 
 let NERDTreeWinPos='left' 
 let NERDTreeWinSize=31 
+
+""""""""""""""""""""""""""""""
+"设置ack
+""""""""""""""""""""""""""""""
+let g:ackprg="ack-grep -H --nocolor --nogroup --column"
