@@ -222,14 +222,9 @@ set autoread
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "设置打开新标签和切换标签的快捷键
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-if has("gui_running") "|| s:useWildMenu
-   nmap <C-TAB> :tabNext<CR>
-   nmap <C-S-TAB> :tabnext<CR>
-   imap <C-TAB> <ESC><ESC>:tabNext<CR>
-   imap <C-S-TAB> <ESC><ESC>:tabnext<CR>
-   nmap <C-n> :tabnew<CR>
-   nmap <C-F4> :q<CR>
-endif
+nmap <C-l> :tabnext<CR>
+nmap <C-n> :tabnew<CR>
+nmap <C-F4> :q<CR>
 
 
 """"""""""""""""""""""""""""""
