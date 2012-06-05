@@ -101,7 +101,7 @@ syntax on
 "不产生缓冲文件
 set nobackup 
 "设置配色方案
-colorscheme contrasty 
+"colorscheme contrasty 
 "设置TAB键为4个空格
 set tabstop =4 
 "显示行号
@@ -144,7 +144,7 @@ set expandtab
 set mouse=a
 
 "设置窗口大小，行和列
-set lines=30 columns=108
+set lines=42 columns=128
 
 """""""""""""""""""""""""""""
 " TagList setting
