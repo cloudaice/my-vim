@@ -144,7 +144,7 @@ set expandtab
 set mouse=a
 
 "设置窗口大小，行和列
-set lines=42 columns=128
+"set lines=42 columns=128
 
 """""""""""""""""""""""""""""
 " TagList setting
@@ -170,6 +170,9 @@ let g:bufExplorerSplitRight=0        " Split left.
 let g:bufExplorerSplitVertical=1     " Split vertically.
 let g:bufExplorerSplitVertSize = 30  " Split width
 let g:bufExplorerUseCurrentWindow=1  " Open in new window.
+autocmd BufWinEnter \[Buf\ List\] setl nonumber 
+map <F6> :BufExplorer<CR>
+nmap <C-l> :bnext<CR>
 
 """"""""""""""""""""""""""""""
 " winManager setting
@@ -222,7 +225,7 @@ set autoread
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "设置打开新标签和切换标签的快捷键
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nmap <C-l> :tabnext<CR>
+"nmap <C-l> :tabnext<CR>
 nmap <C-n> :tabnew<CR>
 nmap <C-F4> :q<CR>
 
