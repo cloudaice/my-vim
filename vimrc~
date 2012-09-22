@@ -1,0 +1,486 @@
+" An example for a vimrc file.
+"
+" Maintainer:	Bram Moolenaar <Bram@vim.org>
+" Last change:	2008 Dec 17
+"
+" To use it, copy it to
+"     for Unix and OS/2:  ~/.vimrc
+"	      for Amiga:  s:.vimrc
+"  for MS-DOS and Win32:  $VIM\_vimrc
+"	    for OpenVMS:  sys$login:.vimrc
+
+" When started as "evim", evim.vim will already have done these settings.
+if v:progname =~? "evim"
+  finish
+endif
+
+" Use Vim settings, rather than Vi settings (much better!).
+" This must be first, because it changes other options as a side effect.
+set nocompatible
+
+" allow backspacing over everything in insert mode
+set backspace=indent,eol,start
+
+if has("vms")
+  set nobackup		" do not keep a backup file, use versions instead
+else
+  set backup		" keep a backup file
+endif
+set history=50		" keep 50 lines of command line history
+set ruler		" show the cursor position all the time
+set showcmd		" display incomplete commands
+set incsearch		" do incremental searching
+
+" For Win32 GUI: remove 't' flag from 'guioptions': no tearoff menu entries
+" let &guioptions = substitute(&guioptions, "t", "", "g")
+
+" Don't use Ex mode, use Q for formatting
+map Q gq
+
+" CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
+" so that you can undo CTRL-U after inserting a line break.
+inoremap <C-U> <C-G>u<C-U>
+
+" In many terminal emulators the mouse works just fine, thus enable it.
+if has('mouse')
+  set mouse=a
+endif
+
+" Switch syntax highlighting on, when the terminal has colors
+" Also switch on highlighting the last used search pattern.
+if &t_Co > 2 || has("gui_running")
+  syntax on
+  set hlsearch
+endif
+
+" Only do this part when compiled with support for autocommands.
+if has("autocmd")
+
+  " Enable file type detection.
+  " Use the default filetype settings, so that mail gets 'tw' set to 72,
+  " 'cindent' is on in C files, etc.
+  " Also load indent files, to automatically do language-dependent indenting.
+  filetype plugin indent on
+
+  " Put these in an autocmd group, so that we can delete them easily.
+  augroup vimrcEx
+  au!
+
+  " For all text files set 'textwidth' to 78 characters.
+  autocmd FileType text setlocal textwidth=78
+
+  " When editing a file, always jump to the last known cursor position.
+  " Don't do it when the position is invalid or when inside an event handler
+  " (happens when dropping a file on gvim).
+  " Also don't do it when the mark is in the first line, that is the default
+  " position when opening a file.
+  autocmd BufReadPost *
+    \ if line("'\"") > 1 && line("'\"") <= line("$") |
+    \   exe "normal! g`\"" |
+    \ endif
+
+  augroup END
+
+else
+
+  set autoindent		" always set autoindenting on
+
+endif " has("autocmd")
+
+" Convenient command to see the difference between the current buffer and the
+" file it was loaded from, thus the changes you made.
+" Only define it when not defined already.
+if !exists(":DiffOrig")
+  command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
+		  \ | wincmd p | diffthis
+endif
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+syntax on
+"不产生缓冲文件
+set nobackup 
+"设置配色方案
+"colorscheme contrasty 
+"显示行号
+set number 
+"关闭vi兼容模式
+set nocompatible 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Switch syntax highlighting on, when the terminal has colors
+" Also switch on highlighting the last used search pattern.
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if &t_Co > 2 || has("gui_running")
+  syntax on
+  set hlsearch
+endif
+"文件类型检测
+filetype plugin indent on 
+"上下可视行数
+set scrolloff=6 
+"设置删除建可以一次删除4个空格
+set softtabstop=4 
+"vim73设置退格键可用
+set backspace=indent,eol,start
+"搜索时高亮显示结果
+set hls
+"输入搜索命令时，显示目前输入的模式的匹配位置
+set is
+"搜索的时候忽略大小写
+set ignorecase
+"当有一个字母是大写的时候，大小写敏感 
+set smartcase 
+"使用:e命令的时候 可选项预览
+set wildmenu
+"显示括号配对情况
+set showmatch
+"鼠标捕捉
+set mouse=a
+
+"设置窗口大小，行和列
+"set lines=42 columns=128
+
+"""""""""""""""""""""""""""""
+" TagList setting
+"""""""""""""""""""""""""""""
+"Exuberant ctags程序的位置
+let Tlist_Ctags_Cmd="/usr/bin/ctags"
+let Tlist_Inc_Winwidth=0
+"在右侧窗口打开
+let Tlist_Use_Right_Window=1
+"只显示当前文件的tag
+let Tlist_File_Fold_Auto_Close=1
+"如果Taglist是最后一个窗口则退出vim
+let Tlist_Exit_OnlyWindow = 1
+
+
+
+""""""""""""""""""""""""""""""
+" BufExplore settings
+""""""""""""""""""""""""""""""
+let g:bufExplorerDefaultHelp=0       " Do not show default help.
+let g:bufExplorerShowRelativePath=1  " Show relative paths.
+let g:bufExplorerSortBy='mru'        " Sort by most recently used.
+let g:bufExplorerSplitRight=0        " Split left.
+let g:bufExplorerSplitVertical=1     " Split vertically.
+let g:bufExplorerSplitVertSize = 30  " Split width
+let g:bufExplorerUseCurrentWindow=1  " Open in new window.
+autocmd BufWinEnter \[Buf\ List\] setl nonumber 
+map <F6> :BufExplorer<CR>
+nmap <C-l> :bnext<CR>
+
+""""""""""""""""""""""""""""""
+" winManager setting
+""""""""""""""""""""""""""""""
+"let g:winManagerWindowLayout = \""BufExplorer,FileExplorer|TagList"
+let g:winManagerWindowLayout = "FileExplorer|TagList"
+let g:winManagerWidth = 30
+let g:defaultExplorer = 0
+nmap wm :WMToggle<cr>
+map tt :FirstExplorerWindow<CR>
+map bb :BottomExplorerWindow<CR>
+
+"缩进
+"自动与上一行跟从缩进
+"set autoindent " same level indent
+"set smartindent " next level indent
+"缩进使用空格
+"set expandtab
+"设置TAB键为4个空格
+"set tabstop=4
+"set shiftwidth=4
+"set softtabstop=4
+
+
+"设置当前编辑的文件的编码"
+set fileencoding=utf-8
+
+"设置C语言缩进方式
+set cindent
+set ruler
+set incsearch
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"设置python编程环境
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"gvim 内部编码"
+set encoding=utf-8
+set paste
+set expandtab
+set textwidth=0
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set autoindent
+set smartindent
+set backspace=indent,eol,start
+set incsearch
+set ignorecase
+set ruler
+set wildmenu
+set commentstring=\ #\ %s
+set foldlevel=0
+set clipboard+=unnamed
+syntax on
+
+
+"Toggle Menu and Toolbar
+set guioptions-=m
+set guioptions-=T
+map <silent> <F2> :if &guioptions =~# 'T' <Bar>
+        \set guioptions-=T <Bar>
+        \set guioptions-=m <bar>
+    \else <Bar>
+        \set guioptions+=T <Bar>
+        \set guioptions+=m <Bar>
+    \endif<CR>
+
+"map <F8> :NERDTree<CR>
+map <F8> ::NERDTreeToggle<CR>
+
+set autoread
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"设置打开新标签和切换标签的快捷键
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"nmap <C-l> :tabnext<CR>
+nmap <C-n> :tabnew<CR>
+nmap <C-F4> :q<CR>
+
+
+""""""""""""""""""""""""""""""
+"设置NERDTree
+""""""""""""""""""""""""""""""
+"NERD Tree 
+let NERDChristmasTree=1 
+let NERDTreeAutoCenter=1 
+"let NERDTreeBookmarksFile=$VIM.'\Data\NerdBookmarks.txt' 
+let NERDTreeMouseMode=2 
+let NERDTreeShowBookmarks=1 
+let NERDTreeShowFiles=1 
+let NERDTreeShowHidden=1 
+let NERDTreeShowLineNumbers=1 
+let NERDTreeWinPos='left' 
+let NERDTreeWinSize=31 
+
+""""""""""""""""""""""""""""""
+"设置ack
+""""""""""""""""""""""""""""""
+let g:ackprg="ack-grep -H --nocolor --nogroup --column"
+
+""""""""""""""""""""""""""""""
+"设置python和c
+""""""""""""""""""""""""""""""
+" vimrc file for following the coding standards specified in PEP 7 & 8.
+"
+" To use this file, source it in your own personal .vimrc file (``source
+" <filename>``) or, if you don't have a .vimrc file, you can just symlink to it
+" (``ln -s <this file> ~/.vimrc``).  All options are protected by autocmds
+" (read below for an explanation of the command) so blind sourcing of this file
+" is safe and will not affect your settings for non-Python or non-C files.
+"
+"
+" All setting are protected by 'au' ('autocmd') statements.  Only files ending
+" in .py or .pyw will trigger the Python settings while files ending in *.c or
+" *.h will trigger the C settings.  This makes the file "safe" in terms of only
+" adjusting settings for Python and C files.
+"
+" Only basic settings needed to enforce the style guidelines are set.
+" Some suggested options are listed but commented out at the end of this file.
+
+" Number of spaces that a pre-existing tab is equal to.
+" For the amount of space used for a new tab use shiftwidth.
+au BufRead,BufNewFile *py,*pyw,*.c,*.h set tabstop=8
+
+" What to use for an indent.
+" This will affect Ctrl-T and 'autoindent'.
+" Python: 4 spaces
+" C: tabs (pre-existing files) or 4 spaces (new files)
+au BufRead,BufNewFile *.py,*pyw set shiftwidth=4
+au BufRead,BufNewFile *.py,*.pyw set expandtab
+fu Select_c_style()
+    if search('^\t', 'n', 150)
+        set shiftwidth=8
+        set noexpandtab
+    el 
+        set shiftwidth=4
+        set expandtab
+    en
+endf
+au BufRead,BufNewFile *.c,*.h call Select_c_style()
+au BufRead,BufNewFile Makefile* set noexpandtab
+
+" Use the below highlight group when displaying bad whitespace is desired.
+highlight BadWhitespace ctermbg=red guibg=red
+
+" Display tabs at the beginning of a line in Python mode as bad.
+au BufRead,BufNewFile *.py,*.pyw match BadWhitespace /^\t\+/
+" Make trailing whitespace be flagged as bad.
+au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+
+" Wrap text after a certain number of characters
+" Python: 79 
+" C: 79
+au BufRead,BufNewFile *.py,*.pyw,*.c,*.h set textwidth=79
+
+" Turn off settings in 'formatoptions' relating to comment formatting.
+" - c : do not automatically insert the comment leader when wrapping based on
+"    'textwidth'
+" - o : do not insert the comment leader when using 'o' or 'O' from command mode
+" - r : do not insert the comment leader when hitting <Enter> in insert mode
+" Python: not needed
+" C: prevents insertion of '*' at the beginning of every line in a comment
+au BufRead,BufNewFile *.c,*.h set formatoptions-=c formatoptions-=o formatoptions-=r
+
+" Use UNIX (\n) line endings.
+" Only used for new files so as to not force existing files to change their
+" line endings.
+" Python: yes
+" C: yes
+au BufNewFile *.py,*.pyw,*.c,*.h set fileformat=unix
+
+
+" ----------------------------------------------------------------------------
+" The following section contains suggested settings.  While in no way required
+" to meet coding standards, they are helpful.
+
+" Set the default file encoding to UTF-8: ``set encoding=utf-8``
+
+" Puts a marker at the beginning of the file to differentiate between UTF and
+" UCS encoding (WARNING: can trick shells into thinking a text file is actually
+" a binary file when executing the text file): ``set bomb``
+
+" For full syntax highlighting:
+"``let python_highlight_all=1``
+"``syntax on``
+
+" Automatically indent based on file type: ``filetype indent on``
+" Keep indentation level from previous line: ``set autoindent``
+
+" Folding based on indentation: ``set foldmethod=indent``
+
+
+
+
+
+
+" All system-wide defaults are set in $VIMRUNTIME/debian.vim (usually just
+" /usr/share/vim/vimcurrent/debian.vim) and sourced by the call to :runtime
+" you can find below.  If you wish to change any of those settings, you should
+" do it in this file (/etc/vim/vimrc), since debian.vim will be overwritten
+" everytime an upgrade of the vim packages is performed.  It is recommended to
+" make changes after sourcing debian.vim since it alters the value of the
+" 'compatible' option.
+
+" This line should not be removed as it ensures that various options are
+" properly set to work with the Vim-related packages available in Debian.
+runtime! debian.vim
+
+" Uncomment the next line to make Vim more Vi-compatible
+" NOTE: debian.vim sets 'nocompatible'.  Setting 'compatible' changes numerous
+" options, so any other options should be set AFTER setting 'compatible'.
+"set compatible
+
+" Vim5 and later versions support syntax highlighting. Uncommenting the next
+" line enables syntax highlighting by default.
+" 高亮显示
+syntax on
+
+" If using a dark background within the editing area and syntax highlighting
+" turn on this option as well
+" set background=dark
+
+" Uncomment the following to have Vim jump to the last position when
+" reopening a file
+"if has("autocmd")
+"  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+"    \| exe "normal g'\"" | endif
+"endif
+
+" Uncomment the following to have Vim load indentation rules according to the
+" detected filetype. Per default Debian Vim only load filetype specific
+" plugins.
+"if has("autocmd")
+"  filetype indent on
+"endif
+
+" The following are commented out as they cause vim to behave a lot
+" differently from regular Vi. They are highly recommended though.
+"set showcmd                " Show (partial) command in status line.
+"set showmatch                " Show matching brackets.
+"set ignorecase                " Do case insensitive matching
+"set smartcase                " Do smart case matching
+"set incsearch                " Incremental search
+"set autowrite                " Automatically save before commands like :next and :make
+"set hidden             " Hide buffers when they are abandoned
+"set mouse=a                " Enable mouse usage (all modes) in terminals
+
+" Source a global configuration file if available
+" XXX Deprecated, please move your changes here in /etc/vim/vimrc
+if filereadable("/etc/vim/vimrc.local")
+  source /etc/vim/vimrc.local
+endif
+
+
+if has("autocmd")
+
+  " 自动检测文件类型并加载相应的设置
+  filetype plugin indent on
+
+  " Python 文件的一般设置，比如不要 tab 等
+  autocmd FileType python setlocal et | setlocal sta | setlocal sw=4
+
+  " Python Unittest 的一些设置
+  " 可以让我们在编写 Python 代码及 unittest 测试时不需要离开 vim
+  " 键入 :make 或者点击 gvim 工具条上的 make 按钮就自动执行测试用例
+  autocmd FileType python compiler pyunit
+  autocmd FileType python setlocal makeprg=python\ ./alltests.py
+  autocmd BufNewFile,BufRead test*.py setlocal makeprg=python\ %
+
+  " 自动使用新文件模板
+  autocmd BufNewFile test*.py 0r ~/.vim/skeleton/test.py
+  autocmd BufNewFile alltests.py 0r ~/.vim/skeleton/alltests.py
+  autocmd BufNewFile *.py 0r ~/.vim/skeleton/skeleton.py
+
+endif
+
+" python auto-complete code
+" Typing the following (in insert mode):
+"   os.lis<Ctrl-n>
+" will expand to:
+"   os.listdir(
+" Python 自动补全功能，只需要反覆按 Ctrl-N 就行了
+if has("autocmd")
+      autocmd FileType python set complete+=k~/.vim/tools/pydiction
+endif
+
+
+"设置文件类型为python语言
+set filetype=python
+
+"显示行号
+set nu
+
+"自动缩进
+set autoindent
+
+"背景显示颜色（我最喜欢的颜色)
+color torte
+
+"高亮搜索
+set hlsearch
+
+"输入字符串就显示匹配点
+set incsearch
+
+"输入的命令显示出来，看的清楚些
+set showcmd
+
+"自动补全命令时候使用菜单式起配列表
+set wildmenu
+
+"快速缩进？
+set smartindent
+
+
+

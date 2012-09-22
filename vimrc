@@ -102,8 +102,6 @@ syntax on
 set nobackup 
 "设置配色方案
 "colorscheme contrasty 
-"设置TAB键为4个空格
-set tabstop =4 
 "显示行号
 set number 
 "关闭vi兼容模式
@@ -136,10 +134,6 @@ set smartcase
 set wildmenu
 "显示括号配对情况
 set showmatch
-"自动与上一行跟从缩进
-set autoindent  
-"缩进使用空格
-set expandtab
 "鼠标捕捉
 set mouse=a
 
@@ -150,7 +144,7 @@ set mouse=a
 " TagList setting
 """""""""""""""""""""""""""""
 "Exuberant ctags程序的位置
-let Tlist_Ctags_Cmd="/usr/local/bin/ctags"
+let Tlist_Ctags_Cmd="/usr/bin/ctags"
 let Tlist_Inc_Winwidth=0
 "在右侧窗口打开
 let Tlist_Use_Right_Window=1
@@ -158,6 +152,7 @@ let Tlist_Use_Right_Window=1
 let Tlist_File_Fold_Auto_Close=1
 "如果Taglist是最后一个窗口则退出vim
 let Tlist_Exit_OnlyWindow = 1
+
 
 
 """"""""""""""""""""""""""""""
@@ -186,15 +181,16 @@ map tt :FirstExplorerWindow<CR>
 map bb :BottomExplorerWindow<CR>
 
 "缩进
-set autoindent " same level indent
-set smartindent " next level indent
-set expandtab
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
+"自动与上一行跟从缩进
+"set autoindent " same level indent
+"set smartindent " next level indent
+"缩进使用空格
+"set expandtab
+"设置TAB键为4个空格
+"set tabstop=4
+"set shiftwidth=4
+"set softtabstop=4
 
-"gvim 内部编码"
-set encoding=utf-8
 
 "设置当前编辑的文件的编码"
 set fileencoding=utf-8
@@ -204,6 +200,28 @@ set cindent
 set ruler
 set incsearch
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"设置python编程环境
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"gvim 内部编码"
+set encoding=utf-8
+set paste
+set expandtab
+set textwidth=0
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set autoindent
+set smartindent
+set backspace=indent,eol,start
+set incsearch
+set ignorecase
+set ruler
+set wildmenu
+set commentstring=\ #\ %s
+set foldlevel=0
+set clipboard+=unnamed
+syntax on
 
 
 "Toggle Menu and Toolbar
@@ -249,3 +267,4 @@ let NERDTreeWinSize=31
 "设置ack
 """"""""""""""""""""""""""""""
 let g:ackprg="ack-grep -H --nocolor --nogroup --column"
+
